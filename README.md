@@ -130,4 +130,4 @@
 - вспомнил как работать с GitHub
 
 ## Весь код
-- Можно найти в файле [DA-in-GameDev-lab1.ipynb](DA-in-GameDev-lab1.ipynb) этого репозитория
+- Можно найти в файле [DA_in_GameDev_lab1.ipynb](DA_in_GameDev_lab1.ipynb) этого репозитория
