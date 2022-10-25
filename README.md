@@ -1,139 +1,122 @@
 # АНАЛИЗ ДАННЫХ И ИСКУССТВЕННЫЙ ИНТЕЛЛЕКТ [in GameDev]
-Отчет по лабораторной работе #1 выполнил(а):
-- Иванова Ивана Варкравтовна
-- РИ000024
+Отчет по лабораторной работе #3 выполнил:
+- Казанцев Михаил Максимович
+- РИ-210914
 Отметка о выполнении заданий (заполняется студентом):
 
 | Задание | Выполнение | Баллы |
 | ------ | ------ | ------ |
-| Задание 1 | # | 60 |
-| Задание 2 | # | 20 |
-| Задание 3 | # | 20 |
+| Задание 1 | # | - |
+| Задание 2 | # | - |
+| Задание 3 | # | - |
 
 знак "*" - задание выполнено; знак "#" - задание не выполнено;
 
 Работу проверили:
-- к.т.н., доцент Денисов Д.В.
-- к.э.н., доцент Панов М.А.
-- ст. преп., Фадеев В.О.
+-
 
-[![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
-
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
-
-Структура отчета
+## Структура отчета
 
 - Данные о работе: название работы, фио, группа, выполненные задания.
 - Цель работы.
-- Задание 1.
-- Код реализации выполнения задания. Визуализация результатов выполнения (если применимо).
-- Задание 2.
-- Код реализации выполнения задания. Визуализация результатов выполнения (если применимо).
-- Задание 3.
-- Код реализации выполнения задания. Визуализация результатов выполнения (если применимо).
+- Задание 1.
+- Код реализации выполнения задания. Визуализация результатов выполнения.
+- Задание 2.
+- Код реализации выполнения задания. Визуализация результатов выполнения.
+- Задание 3.
+- Код реализации выполнения задания.
 - Выводы.
-- ✨Magic ✨
 
 ## Цель работы
-Ознакомиться с основными операторами зыка Python на примере реализации линейной регрессии.
+Познакомиться с программными средствами для создания системы машинного обучения и ее интеграции в Unity.
 
 ## Задание 1
-### Пошагово выполнить каждый пункт раздела "ход работы" с описанием и примерами реализации задач
 Ход работы:
-- Произвести подготовку данных для работы с алгоритмом линейной регрессии. 10 видов данных были установлены случайным образом, и данные находились в линейной зависимости. Данные преобразуются в формат массива, чтобы их можно было вычислить напрямую при использовании умножения и сложения.
+- Сначала был установлен пакет ML Agents для Unity
+- После этого список пакетов выглядит вот так:
+![packages](images/packages.png?raw=true)
 
-```py
+- Затем была произведена настройка Python
+- Среда разработки PyCharm была использована как визуальная обёртка над venv, чтобы модули не устанавливались глобально для всей машины
 
-In [ ]:
-#Import the required modules, numpy for calculation, and Matplotlib for drawing
-import numpy as np
-import matplotlib.pyplot as plt
-#This code is for jupyter Notebook only
-%matplotlib inline
+![python_install](images/python_install.png?raw=true)
 
-# define data, and change list to array
-x = [3,21,22,34,54,34,55,67,89,99]
-x = np.array(x)
-y = [2,22,24,65,79,82,55,130,150,199]
-y = np.array(y)
+- В Unity была создана следующая структура:
 
-#Show the effect of a scatter plot
-plt.scatter(x,y)
+![setup1_1](images/setup1_1.png?raw=true)
 
-```
+	* Environment - просто объект-контейнер
+	* Floor - просто плоскость
+	* Target - просто куб
+	* Agent - агент машинного обучения, он содержит следующие компоненты:
 
-- Определите связанные функции. Функция модели: определяет модель линейной регрессии wx+b. Функция потерь: функция потерь среднеквадратичной ошибки. Функция оптимизации: метод градиентного спуска для нахождения частных производных w и b.
+![setup1_2](images/setup1_2.png?raw=true)
 
+- Код компонента RollerAgent:
+
+![roller_code](images/roller_code.png?raw=true)
+
+- Копии модели были сделаны при помощи компонента Instancer
+
+![instancer_props](images/instancer_props.png?raw=true)
+![instancer_code](images/instancer_code.png?raw=true)
+
+- Теперь можно запускать `mlagents-learn`:
+
+![mlagents_launch](images/mlagents_launch.png?raw=true)
+
+- Процесс обучения:
+![instancer_result](images/instancer_result.png?raw=true)
+
+
+- Результаты модели после обучения:
+
+[ВИДЕО](images/testing_inference.mp4)
+
+- Как видно, благодаря фреймворку Unity MLAgents обучение нейронных сетей в сложных играх/окружениях становится намного доступней
 
 ## Задание 2
-### Должна ли величина loss стремиться к нулю при изменении исходных данных? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ.
+### Подробно опишите каждую строку файла конфигурации нейронной сети `rollerball_config.yaml`. Самостоятельно найдите информацию о компонентах Decision Requester, Behavior Parameters, добавленных на сфере.
 
-- Перечисленные в этом туториале действия могут быть выполнены запуском на исполнение скрипт-файла, доступного [в репозитории](https://github.com/Den1sovDm1triy/hfss-scripting/blob/main/ScreatingSphereInAEDT.py).
-- Для запуска скрипт-файла откройте Ansys Electronics Desktop. Перейдите во вкладку [Automation] - [Run Script] - [Выберите файл с именем ScreatingSphereInAEDT.py из репозитория].
+![config_breakdown.png](images/config_breakdown.png?raw=true)
 
-```py
+- Decision Requester - заставляет агента принимать решения каждые `Decision Period` кадров
 
-import ScriptEnv
-ScriptEnv.Initialize("Ansoft.ElectronicsDesktop")
-oDesktop.RestoreWindow()
-oProject = oDesktop.NewProject()
-oProject.Rename("C:/Users/denisov.dv/Documents/Ansoft/SphereDIffraction.aedt", True)
-oProject.InsertDesign("HFSS", "HFSSDesign1", "HFSS Terminal Network", "")
-oDesign = oProject.SetActiveDesign("HFSSDesign1")
-oEditor = oDesign.SetActiveEditor("3D Modeler")
-oEditor.CreateSphere(
-	[
-		"NAME:SphereParameters",
-		"XCenter:="		, "0mm",
-		"YCenter:="		, "0mm",
-		"ZCenter:="		, "0mm",
-		"Radius:="		, "1.0770329614269mm"
-	], 
-)
-
-```
+- Behavior Parameters - определяет как агент передаёт данные модели и какие действия модель может выполнять. Так же отвечает за выполнение натренированной модели без соединение с Python
 
 ## Задание 3
-### Какова роль параметра Lr? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ. В качестве эксперимента можете изменить значение параметра.
+### Доработайте сцену и обучите ML-Agent таким образом, чтобы шар перемещался между двумя кубами разного цвета. Кубы должны, как и в первом задании, случайно изменять координаты на плоскости.
 
-- Перечисленные в этом туториале действия могут быть выполнены запуском на исполнение скрипт-файла, доступного [в репозитории](https://github.com/Den1sovDm1triy/hfss-scripting/blob/main/ScreatingSphereInAEDT.py).
-- Для запуска скрипт-файла откройте Ansys Electronics Desktop. Перейдите во вкладку [Automation] - [Run Script] - [Выберите файл с именем ScreatingSphereInAEDT.py из репозитория].
+- Внесём небольшие изменения в файл RollerAgent(новая версия - [RollerAgentMultiTarget](MLAgentsTest/Assets/Scripts/RollerAgentMultiTarget.cs))
 
-```py
+![roller_code2](images/roller_code2.png?raw=true)
 
-import ScriptEnv
-ScriptEnv.Initialize("Ansoft.ElectronicsDesktop")
-oDesktop.RestoreWindow()
-oProject = oDesktop.NewProject()
-oProject.Rename("C:/Users/denisov.dv/Documents/Ansoft/SphereDIffraction.aedt", True)
-oProject.InsertDesign("HFSS", "HFSSDesign1", "HFSS Terminal Network", "")
-oDesign = oProject.SetActiveDesign("HFSSDesign1")
-oEditor = oDesign.SetActiveEditor("3D Modeler")
-oEditor.CreateSphere(
-	[
-		"NAME:SphereParameters",
-		"XCenter:="		, "0mm",
-		"YCenter:="		, "0mm",
-		"ZCenter:="		, "0mm",
-		"Radius:="		, "1.0770329614269mm"
-	], 
-)
+- Вместо одной, агент теперь хранит ссылки на несколько целей
 
-```
+- Также, он хранит индекс текущуей цели. Там, где в оригинале использовался `Target`, теперь используется цель по текущему индексу
+
+- Когда агент достигает текущей цели, индекс увеличивается на 1
+
+- Когда все цели были удачно пройдены, и индекс выходит за границы массива, мы награждаем агента и передвигаем все цели
+
+- Даже после этих изменений, модель, обученная для Задания 1, справляется и с этим заданием
+
+[ВИДЕО](images/testing_inference2.mp4)
 
 ## Выводы
+### Игровой баланс
+- Чтобы быть интересной, игра должна предоставлять испытания игроку. При этом, испытания не должны быть слишком сложными - мало кто будет играть в игру, которую невозможно пройти. Но испытания и не должны быть слишком лёгкими - иначе игра просто станет скучной
+- Это и есть суть игрового баланса
 
-Абзац умных слов о том, что было сделано и что было узнано.
+- Системы машинного обучения могут помочь найти этот баланс
+- Они могут играть 24/7, тем самым получая больше опыта чем любой реальный игрок(возможно даже до релиза!)
+- Кроме того, эти системы очень хороши в нахождении багов - есть даже целая [таблица](http://tinyurl.com/specification-gaming) с разными проектами где модели научились использовать баги в свою пользу
+- И благодаря таким фреймворкам как Unity MLAgents, подключить такую систему к реальной игре становится всё проще и проще
 
-| Plugin | README |
-| ------ | ------ |
-| Dropbox | [plugins/dropbox/README.md][PlDb] |
-| GitHub | [plugins/github/README.md][PlGh] |
-| Google Drive | [plugins/googledrive/README.md][PlGd] |
-| OneDrive | [plugins/onedrive/README.md][PlOd] |
-| Medium | [plugins/medium/README.md][PlMe] |
-| Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
+### Остальные выводы
+- Я освоил основы фреймворка Unity MLAgents
+- научил нейронную сеть действовать в простом физическом окружении
+- изучил основы современных алгоритмов в сфере reinforcement learning
 
-## Powered by
-
-**BigDigital Team: Denisov | Fadeev | Panov**
+## Код и другие ресурсы
+- Проект Unity находится в папке [MLAgentsTest](MLAgentsTest) этого репозитория
