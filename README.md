@@ -1,139 +1,139 @@
 # АНАЛИЗ ДАННЫХ И ИСКУССТВЕННЫЙ ИНТЕЛЛЕКТ [in GameDev]
-Отчет по лабораторной работе #1 выполнил(а):
-- Иванова Ивана Варкравтовна
-- РИ000024
+Отчет по лабораторной работе #4 выполнил:
+- Казанцев Михаил Максимович
+- РИ-210914
+
+
 Отметка о выполнении заданий (заполняется студентом):
 
 | Задание | Выполнение | Баллы |
 | ------ | ------ | ------ |
-| Задание 1 | # | 60 |
-| Задание 2 | # | 20 |
-| Задание 3 | # | 20 |
+| Задание 1 | * | 60 |
+| Задание 2 | * | 20 |
+| Задание 3 | * | 20 |
 
 знак "*" - задание выполнено; знак "#" - задание не выполнено;
 
 Работу проверили:
-- к.т.н., доцент Денисов Д.В.
-- к.э.н., доцент Панов М.А.
-- ст. преп., Фадеев В.О.
-
-[![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
-
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
 Структура отчета
 
 - Данные о работе: название работы, фио, группа, выполненные задания.
 - Цель работы.
 - Задание 1.
-- Код реализации выполнения задания. Визуализация результатов выполнения (если применимо).
+- Данные для обучения перцептрона. Результаты выполнения.
 - Задание 2.
-- Код реализации выполнения задания. Визуализация результатов выполнения (если применимо).
+- Код реализации графика обучения. Визуализация процесса обучения.
 - Задание 3.
-- Код реализации выполнения задания. Визуализация результатов выполнения (если применимо).
+- Код реализации визуальной модели. Результаты выполнения.
 - Выводы.
-- ✨Magic ✨
 
 ## Цель работы
-Ознакомиться с основными операторами зыка Python на примере реализации линейной регрессии.
+Построить простой перцептрон и обучить его имитировать логические элементы
 
 ## Задание 1
-### Пошагово выполнить каждый пункт раздела "ход работы" с описанием и примерами реализации задач
 Ход работы:
-- Произвести подготовку данных для работы с алгоритмом линейной регрессии. 10 видов данных были установлены случайным образом, и данные находились в линейной зависимости. Данные преобразуются в формат массива, чтобы их можно было вычислить напрямую при использовании умножения и сложения.
+ - Создана сцена Unity, в неё добавлен новый объект, к нему подключен данный компонент `Perceptron`
+ - Создано 3 других дупликата этого объекта, таким образом получаем 1 объект для каждого логического элемента
+![models_setup](images/models_setup.png?raw=true)
 
-```py
+- Для каждого перцептрона введён набор данных из 4 элементов:
+- OR:
 
-In [ ]:
-#Import the required modules, numpy for calculation, and Matplotlib for drawing
-import numpy as np
-import matplotlib.pyplot as plt
-#This code is for jupyter Notebook only
-%matplotlib inline
+![task1_or_setup](images/task1_or_setup.png?raw=true)
 
-# define data, and change list to array
-x = [3,21,22,34,54,34,55,67,89,99]
-x = np.array(x)
-y = [2,22,24,65,79,82,55,130,150,199]
-y = np.array(y)
+- AND:
 
-#Show the effect of a scatter plot
-plt.scatter(x,y)
+![task1_and_setup](images/task1_and_setup.png?raw=true)
 
-```
+- NAND:
 
-- Определите связанные функции. Функция модели: определяет модель линейной регрессии wx+b. Функция потерь: функция потерь среднеквадратичной ошибки. Функция оптимизации: метод градиентного спуска для нахождения частных производных w и b.
+![task1_nand_setup](images/task1_nand_setup.png?raw=true)
 
+- XOR:
+
+![task1_xor_setup](images/task1_xor_setup.png?raw=true)
+
+- После запуска проекта обучение запускается автоматически
+- Результаты обучения OR:
+
+![task1_or_logs](images/task1_or_logs.png?raw=true)
+- Ошибка обучения равнияется нулю - перцептрон работает корректно
+
+- Результаты обучения AND:
+
+![task1_and_logs](images/task1_and_logs.png?raw=true)
+- Ошибка обучения равнияется нулю - перцептрон работает корректно
+
+- Результаты обучения NAND:
+
+![task1_nand_logs](images/task1_nand_logs.png?raw=true)
+- Ошибка обучения равнияется нулю - перцептрон работает корректно
+
+- Результаты обучения XOR:
+
+![task1_xor_logs](images/task1_xor_logs.png?raw=true)
+- Ошибка обучения больше нуля - перцептрон не смог обучится
 
 ## Задание 2
-### Должна ли величина loss стремиться к нулю при изменении исходных данных? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ.
+Ход работы:
+ - Добавлен новый объект с новым компонентом `PerceptronManager`. Фрагмент кода ответственный за графики:
+ 
+![manager_code](images/manager_code.png?raw=true)
+ - Он управляет обучением и отображением результатов, а именно графика ошибки после каждой эпохи
+ - Были необходимы изменения компонента `Perceptron`, финальная версия находится в репозитории
+ - В результате были получены графики ошибки в процессе обучения(по оси X - номер эпохи, Y - общая ошибка)
+ - (`PerceptronManager` импользует `GraphVisual`, небольшой класс использующий Unity.UI для отображения графиков)
+ 
+ - OR:
+ 
+![task1_or_loss](images/task1_or_loss.png?raw=true)
 
-- Перечисленные в этом туториале действия могут быть выполнены запуском на исполнение скрипт-файла, доступного [в репозитории](https://github.com/Den1sovDm1triy/hfss-scripting/blob/main/ScreatingSphereInAEDT.py).
-- Для запуска скрипт-файла откройте Ansys Electronics Desktop. Перейдите во вкладку [Automation] - [Run Script] - [Выберите файл с именем ScreatingSphereInAEDT.py из репозитория].
+- AND:
 
-```py
+![task1_and_loss](images/task1_and_loss.png?raw=true)
 
-import ScriptEnv
-ScriptEnv.Initialize("Ansoft.ElectronicsDesktop")
-oDesktop.RestoreWindow()
-oProject = oDesktop.NewProject()
-oProject.Rename("C:/Users/denisov.dv/Documents/Ansoft/SphereDIffraction.aedt", True)
-oProject.InsertDesign("HFSS", "HFSSDesign1", "HFSS Terminal Network", "")
-oDesign = oProject.SetActiveDesign("HFSSDesign1")
-oEditor = oDesign.SetActiveEditor("3D Modeler")
-oEditor.CreateSphere(
-	[
-		"NAME:SphereParameters",
-		"XCenter:="		, "0mm",
-		"YCenter:="		, "0mm",
-		"ZCenter:="		, "0mm",
-		"Radius:="		, "1.0770329614269mm"
-	], 
-)
+- NAND:
 
-```
+![task1_nand_loss](images/task1_nand_loss.png?raw=true)
+
+- XOR:
+
+![task1_xor_loss](images/task1_xor_loss.png?raw=true)
+
+ - Необходимое кол-во эпох зависит в основном от того, как далеко начальные веса находятся от оптимальных(т.е. тех, при которых перцептрон решает задачу)
+ - На практике, количество эпох зависит от сложности поставленной задачи
 
 ## Задание 3
-### Какова роль параметра Lr? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ. В качестве эксперимента можете изменить значение параметра.
+Ход работы:
+ - В `PerceptronManager` добавлен функционал для визуализации перцептрона:
+ 
+![manager_code2](images/manager_code2.png?raw=true)
+ - В этом ему помогает новый компонент `PerceptronVisualizer`
+ 
+![vis_code](images/vis_code.png?raw=true)
+ - Его задача - создать изображение, где координаты пикселя - входные значения перцептрона, а цвет пикселя соответствует тому, что перцептрон возвращает(без преобразования к 0 или 1, значения берутся напрямую из выхода перцептрона, сами цвета создаются специальным шейдером. Благодаря этому изображения могут быть очень низкого разрешения)
+ - В результате получены такие изображения:
 
-- Перечисленные в этом туториале действия могут быть выполнены запуском на исполнение скрипт-файла, доступного [в репозитории](https://github.com/Den1sovDm1triy/hfss-scripting/blob/main/ScreatingSphereInAEDT.py).
-- Для запуска скрипт-файла откройте Ansys Electronics Desktop. Перейдите во вкладку [Automation] - [Run Script] - [Выберите файл с именем ScreatingSphereInAEDT.py из репозитория].
+ - OR:
+ 
+![task1_or_vis](images/task1_or_vis.png?raw=true)
 
-```py
+- AND:
 
-import ScriptEnv
-ScriptEnv.Initialize("Ansoft.ElectronicsDesktop")
-oDesktop.RestoreWindow()
-oProject = oDesktop.NewProject()
-oProject.Rename("C:/Users/denisov.dv/Documents/Ansoft/SphereDIffraction.aedt", True)
-oProject.InsertDesign("HFSS", "HFSSDesign1", "HFSS Terminal Network", "")
-oDesign = oProject.SetActiveDesign("HFSSDesign1")
-oEditor = oDesign.SetActiveEditor("3D Modeler")
-oEditor.CreateSphere(
-	[
-		"NAME:SphereParameters",
-		"XCenter:="		, "0mm",
-		"YCenter:="		, "0mm",
-		"ZCenter:="		, "0mm",
-		"Radius:="		, "1.0770329614269mm"
-	], 
-)
+![task1_and_vis](images/task1_and_vis.png?raw=true)
 
-```
+- NAND:
+
+![task1_nand_vis](images/task1_nand_vis.png?raw=true)
+
+- XOR:
+
+![task1_xor_vis](images/task1_xor_vis.png?raw=true)
+
+- По сути эти изображения образуют модель, т.к. представляют собой таблицы результатов при каждом входе
+- Так же в этих изображениях чётко виден критерий, по которому работает перцептрон, а именно - на какой стороне линии находится вход(если представить значения как точку в двухмерном пространстве)
 
 ## Выводы
-
-Абзац умных слов о том, что было сделано и что было узнано.
-
-| Plugin | README |
-| ------ | ------ |
-| Dropbox | [plugins/dropbox/README.md][PlDb] |
-| GitHub | [plugins/github/README.md][PlGh] |
-| Google Drive | [plugins/googledrive/README.md][PlGd] |
-| OneDrive | [plugins/onedrive/README.md][PlOd] |
-| Medium | [plugins/medium/README.md][PlMe] |
-| Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
-
-## Powered by
-
-**BigDigital Team: Denisov | Fadeev | Panov**
+- Были изучены свойства самой простой нейронной сети - перцептрона
+- Для визуализаций была изучена UI библиотека Unity
